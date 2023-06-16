@@ -1,0 +1,118 @@
+﻿<Page x:Class="KompasNameSetter.Views.RoughnessView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KompasNameSetter.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="500"
+      Title="RoughnessView" Background="White">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <TextBlock Text="Часть для замены(или пусто)"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Foreground" Value="#5a70c4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Шероховатость"
+                       VerticalAlignment="Center" Grid.Column="0" Margin="0,20"/>
+            <TextBox  Grid.Column="1" VerticalAlignment="Center" Height="30" Text="{Binding RoughnessValue}"/>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="86*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Row="1"  Grid.Column="0" 
+                    Command="{Binding OpenFolder}" 
+                    Background="{Binding FolderButtonColor, TargetNullValue=LightGray}">
+                <TextBlock Text="Выбрать каталог" TextAlignment="Center" TextWrapping="Wrap"/>
+            </Button>
+            <Button Grid.Row="1"  Grid.Column="1" 
+                    Command="{Binding OpenFiles}" 
+                    Background="{Binding FileButtonColor, TargetNullValue=LightGray}">
+                <TextBlock Text="Выбрать файлы каталог" TextAlignment="Center" TextWrapping="Wrap"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="2"
+                    Command="{Binding Change}">
+                <TextBlock Text="Поменять" TextAlignment="Center" TextWrapping="Wrap"/>
+            </Button>
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                <ComboBox Height="30" Width="250" Grid.Column="2" ItemsSource="{Binding Types}" SelectedItem="{Binding RoughTypeSelected}" FontSize="16"/>
+                
+                <CheckBox Margin="10,0,0,0" VerticalAlignment="Center" IsChecked="{Binding AddSign}">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+            </StackPanel>
+        </Grid>
+
+        <StatusBar Grid.Row="3" UseLayoutRounding="True">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Text="{Binding InfoText}"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <ProgressBar Width="150" Height="30" Maximum="100" Minimum="0" Value="{Binding CurrentProgress}"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Grid.Column="1" FontSize="11" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Text="{Binding ProgressText}"/>
+            </StatusBarItem>
+            
+        </StatusBar>
+        
+    </Grid>
+</Page>

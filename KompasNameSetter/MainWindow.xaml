@@ -1,0 +1,42 @@
+﻿<Window x:Class="KompasNameSetter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KompasNameSetter"
+        xmlns:views="clr-namespace:KompasNameSetter.Views"
+        xmlns:models="clr-namespace:KompasNameSetter.Models"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=System"
+        Title="KompasNameSetter" Height="400" Width="700" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type models:WorkFrame}">
+            <Grid>
+                <TextBlock Text="{Binding Path=Name}" Height="40"
+                           FontSize="18" VerticalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView ItemsSource="{Binding Frames}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <ei:CallMethodAction 
+                        MethodName="ListView_SelectionChanged"
+                        TargetObject="{Binding}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListView>
+
+        <Frame NavigationUIVisibility="Hidden"  Grid.Column="1" Source="{Binding CurrentFrame}"/>
+    </Grid>
+</Window>
